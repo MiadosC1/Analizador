@@ -27,22 +27,90 @@ terminal Pregunta, Contrario, Comparar, Identificador, Literal, Numero, Operacio
     Conversiones, CodigosRetorno, Estados, EstructuraCondicional, VariablesEspeciales,
     LiteralesEspeciales, Serializacion, Tiempo, Random, Recursos, Logs, Enums, Declaraciones,
     Generadores, Modularizacion, OperacionesMatematicas, Matrices, Compilacion, Versiones, 
-    Git, SeguridadWeb, Anotaciones, Proxies, Reflexion, Identificiadores, Numerosenteros,
+    Git, SeguridadWeb, Anotaciones, Proxies, Reflexion, Identificiadores, NumeroEntero,
     NumeroDecimal, NumerosHexadecimal, Caracter, Cadena, EnlaceExterno, LlaveApertura, LlaveCerradura,
     ParentesisApertura, ParentesisCerradura, CorcheteApertura, CorcheteCerradura, Delimitador, ERROR;
-non terminal ESPACIO, VARIABLE, FUNCIONES, CONDICIONPREGUNTA, CICLOFOR, IMPRESION;
 
-start with ESPACIO;
+non terminal SENTENCIA, ESPACIO, VARIABLE, FUNCIONES, CONDICIONPREGUNTA, CICLOPARA, IMPRESION, INICIAR, DECISION, MIENTRAS;
 
-ESPACIO ::= Acceso Modificadores Clases Identificador Punteros Identificador;
+start with SENTENCIA;
+
+SENTENCIA ::= ESPACIO | VARIABLE | FUNCIONES | CONDICIONPREGUNTA | CICLOPARA | IMPRESION | INICIAR | DECISION | MIENTRAS;
+
+
+ESPACIO ::= Acceso Modificadores Identificador LlaveApertura SENTENCIA LlaveCerradura;
+
+/* public class MiClase
+{
+    SENTENCIA
+}
+*/
 
 VARIABLE ::= Tipodato Identificador Asignacion Cadena Delimitador;
 
-FUNCIONES ::= Tipodato Identificador ParentesisApertura ParentesisCerradura LlaveApertura LlaveCerradura;
+/*String nombre = "Juan";*/
 
-CONDICIONPREGUNTA ::= Pregunta ParentesisApertura Identificador Comparar Numero ParentesisCerradura LlaveApertura LlaveCerradura;
+FUNCIONES ::= Tipodato Identificador ParentesisApertura ParentesisCerradura LlaveApertura SENTENCIA LlaveCerradura;
 
-CICLOFOR ::= Ciclos ParentesisApertura Tipodato Identificador Asignacion Numero Delimitador Identificador Comparar Numero Delimitador 
-               Identificador Incremento ParentesisCerradura LlaveApertura LlaveCerradura;
+/*int sumar()
+{
+    SENTENCIA
+}
+*/
 
-IMPRESION ::= Identificador ParentesisApertura Cadena ParentesisCerradura Delimitador;
+CONDICIONPREGUNTA ::= Pregunta ParentesisApertura Identificador Comparar NumeroDecimal ParentesisCerradura LlaveApertura SENTENCIA LlaveCerradura;
+
+/*if (edad > 18)
+{
+    SENTENCIA
+}
+*/
+    
+CICLOPARA ::= Ciclos ParentesisApertura Tipodato Identificador Asignacion NumeroEntero Delimitador Identificador Comparar NumeroEntero Delimitador 
+               Identificador Incremento ParentesisCerradura LlaveApertura SENTENCIA LlaveCerradura;
+
+/*for (int i = 0; i < 10; i++)
+{
+    SENTENCIA
+}
+*/
+
+IMPRESION ::= E_S ParentesisApertura Cadena ParentesisCerradura Delimitador;
+
+/*print("Hola mundo");*/
+
+INICIO ::= Tipodato Identificador ParentesisApertura ParentesisCerradura LlaveApertura SENTENCIA LlaveCerradura;
+
+/*int main()
+{
+    SENTENCIA
+}*/
+
+
+DECISION ::=         Logico
+                     | Identificador Comparar Numero
+                     | Identificador Comparar Identificador
+                     | Identificador Comparar Literal
+                     | Identificador Comparar Cadena
+                     ;
+/*
+true                   
+x >= 10                      
+x == y                        
+texto == ""                  
+texto == "mensaje" 
+*/
+
+
+EMPEZAR ::= FuncionesEspeciales Identificador Delimitador;
+
+/*start with INICIO;*/
+
+
+MIENTRAS ::= Ciclos ParentesisApertura DECISION ParentesisCerradura LlaveApertura SENTENCIA LlaveCerradura;
+
+/*while (x < 10)
+{
+    SENTENCIA
+}
+*/

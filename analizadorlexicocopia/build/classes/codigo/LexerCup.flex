@@ -25,7 +25,6 @@ espacio=[ ,\t,\r,\n]+
 "if"                         {return new Symbol(sym.Pregunta, yychar, yyline, yytext());}
 "else"                       {return new Symbol(sym.Contrario, yychar, yyline, yytext());}
 ">="|"<="|"=="|"!="|">"|"<"   {return new Symbol(sym.Comparar, yychar, yyline, yytext());}
-{D}+                          {return new Symbol(sym.Numero, yychar, yyline, yytext());}
 \"{L}({L}|{D})*\"              {return new Symbol(sym.Literal, yychar, yyline, yytext());}
 "**"|"+"|"-"|"*"|"/"|"%"      {return new Symbol(sym.Operaciones, yychar, yyline, yytext());}
 "="                           { return new Symbol(sym.Asignacion, yychar, yyline, yytext()); }
@@ -93,7 +92,7 @@ for|while|do|foreach|repeat|until { return new Symbol(sym.Ciclos, yychar, yyline
 
 switch|case|default|when { return new Symbol(sym.Condiciones, yychar, yyline, yytext()); }
 
-print|scanf|cin|cout|input|output { return new Symbol(sym.E_S, yychar, yyline, yytext()); }
+print|scanf|cin|cout|input|output { retprinturn new Symbol(sym.E_S, yychar, yyline, yytext()); }
 
 include|using|require { return new Symbol(sym.Require, yychar, yyline, yytext()); }
 
